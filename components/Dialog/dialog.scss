@@ -1,0 +1,141 @@
+.dialog_wrap, .dialog_mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dialog_wrap {
+  display: none;
+}
+
+@mixin dialog_m_transition($type: opacity, $time: .15s) {
+  -webkit-transition: $type $time linear;
+  -moz-transition: $type $time linear;
+  -o-transition: $type $time linear;
+  transition: $type $time linear;
+}
+
+@mixin dialog_m_scale($translate:(-50%, -50%), $scale: (0, 0)) {
+  -webkit-transform: translate($translate) scale($scale);
+  -moz-transform: translate($translate) scale($scale);
+  -o-transform: translate($translate) scale($scale);
+  transform: translate($translate) scale($scale);
+}
+
+@mixin dialog_m_animation($type:dialog_scale,$time:.15s) {
+  -webkit-animation: $type $time linear;
+  -webkit-animation-fill-mode: forwards;
+  animation: $type $time linear;
+  animation-fill-mode: forwards;
+}
+
+@mixin dialog_m_step {
+  0% {@include dialog_m_scale((-50%, -50%),(0, 0));}
+  80% {@include dialog_m_scale((-50%, -50%),(1.2, 1.2));}
+  100% {@include dialog_m_scale((-50%, -50%),(1, 1));}
+}
+
+@mixin dialog_m_keyframes {
+  @at-root {
+    @-webkit-keyframes dialog_scale {
+      @include dialog_m_step;
+    }
+    @-moz-keyframes dialog_scale {
+      @include dialog_m_step;
+    }
+    @-o-keyframes dialog_scale {
+      @include dialog_m_step;
+    }
+    @keyframes dialog_scale {
+      @include dialog_m_step;
+    }
+  }
+}
+
+.dialog_mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  @include dialog_m_transition(opacity, .15s);
+}
+
+.dialog_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #333;
+  font-size:12px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0 ,0.5);
+  @include dialog_m_scale((-50%, -50%),(0, 0));
+  overflow: hidden;
+}
+
+.dialog_wrap.active .dialog_mask{
+  opacity: 1;
+}
+
+.dialog_wrap.active .dialog_box{
+  @include dialog_m_animation(dialog_scale, .15s);
+  @include dialog_m_keyframes;
+}
+
+.dialog_alert,
+.dialog_confirm,
+.dialog_prompt{
+  display:none;
+  padding: 8px 16px;
+}
+
+.dialog_message {
+  max-width: 16em;
+  text-align: center;
+}
+
+
+.dialog_prompt_inpt{
+  margin-top: 8px;
+}
+
+.dialog_prompt_inpt > input{
+  padding:0 8px;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  border: #ddd 1px solid;
+  outline:none;
+}
+
+.dialog_btn {
+  display:none;
+  padding: 8px 16px;
+  text-align: center;
+  border-top: #ddd 1px solid;
+}
+
+.dialog_btn > button {
+  padding: 4px 8px;
+  background-color: #fff;
+  border: #ddd 1px solid;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+.dialog_btn > button:first-child {
+  margin-right: 16px;
+}
+
+.dialog_btn > button:hover {
+  background-color: #ddd;
+}
+
+.dialog_show{
+  display:block;
+}
+
+.dialog_hide{
+  display:none;
+}

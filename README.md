@@ -1,2 +1,2 @@
 # react_component
-react组件
+react组件:dialog;

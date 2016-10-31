@@ -15,6 +15,7 @@ export default class Dialog extends Component {
       defaultValue: '',
       callback: null
     };
+    this.timer = null;
   }
 
   submit(){
@@ -28,7 +29,7 @@ export default class Dialog extends Component {
         return;
       }
     }
-    dialog.callback.call(null,result);
+    dialog.callback.call(null, result);
     this.close();
   }
 
@@ -40,7 +41,8 @@ export default class Dialog extends Component {
 
   close() {
     this.refs.wrap.className = "dialog_wrap dialog_show";
-    setTimeout(function() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(function() {console.log('dd')
       this.setState({
         show: false
       });
@@ -50,11 +52,12 @@ export default class Dialog extends Component {
   componentDidUpdate() {
     if(this.state.show) {
       this.refs.inpt.value = this.state.defaultValue;
-      setTimeout(function() {
+      this.timer = setTimeout(function() {
         this.refs.wrap.className = "dialog_wrap dialog_show active";
       }.bind(this));
-      if(this.state.type === 'alert' && this.state.timeout){
-        setTimeout(function() {
+      if(this.state.type === 'alert' && this.state.timeout) {
+        this.timer = setTimeout(function() {
+          if(this.refs.wrap.className.indexOf('active')<0) {return;}
           this.close();
         }.bind(this), this.state.timeout);
       }

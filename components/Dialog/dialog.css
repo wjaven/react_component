@@ -1,0 +1,112 @@
+.dialog_wrap,
+.dialog_mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dialog_wrap {
+  display: none;
+}
+
+.dialog_mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+
+.dialog_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #333;
+  font-size: 12px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%) scale(0, 0);
+  overflow: hidden;
+}
+
+.dialog_wrap.active .dialog_mask {
+  opacity: 1;
+}
+
+.dialog_wrap.active .dialog_box {
+  animation: dialog_k_scale 0.15s linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes dialog_k_scale {
+  0% {
+    transform: translate(-50%, -50%) scale(0, 0);
+  }
+
+  80% {
+    transform: translate(-50%, -50%) scale(1.2, 1.2);
+  }
+  
+  100% {
+    transform: translate(-50%, -50%) scale(1, 1);
+  }
+}
+
+.dialog_alert,
+.dialog_confirm,
+.dialog_prompt {
+  display: none;
+  padding: 8px 16px;
+}
+
+.dialog_message {
+  max-width: 16em;
+  text-align: center;
+}
+
+
+.dialog_prompt_inpt {
+  margin-top: 8px;
+}
+
+.dialog_prompt_inpt > input {
+  padding: 0 8px;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  border: #ddd 1px solid;
+  outline: none;
+}
+
+.dialog_btn {
+  display: none;
+  padding: 8px 16px;
+  text-align: center;
+  border-top: #ddd 1px solid;
+}
+
+.dialog_btn > button {
+  padding: 4px 8px;
+  background-color: #fff;
+  border: #ddd 1px solid;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+.dialog_btn > button:first-child {
+  margin-right: 16px;
+}
+
+.dialog_btn > button:hover {
+  background-color: #ddd;
+}
+
+.dialog_show {
+  display: block;
+}
+
+.dialog_hide {
+  display: none;
+}

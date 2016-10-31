@@ -1,3 +1,8 @@
+const webpack = require('webpack');
+const postcssImport = require('postcss-import');
+const cssnext = require('postcss-cssnext');
+const stylelint = require('stylelint');
+const postcssReporter = require('postcss-reporter');
 module.exports = {
   entry: './index.js',
   output: {
@@ -6,7 +11,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loader: 'babel',
         exclude: /node_modules/,
         query: {
@@ -15,11 +20,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'style-loader!css-loader!postcss-loader'
       },
       {
         test:/\.scss$/,
-        loader: 'style-loader!css-loader!sass-loader'
+        loader: 'style-loader!css-loader!postcss-loader!sass-loader'
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -28,6 +33,23 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['','.js']
-  }
+    extensions: ['', '.js', '.jsx']
+  },
+  postcss: [
+    postcssImport({
+      addDependencyTo: webpack
+    }),
+    cssnext({
+      autoprefixer: {
+        browers: 'ie >= 10, ...'
+      }
+    }),
+    stylelint({
+      config: require('./stylelint.config.js'),
+      failOnError: true
+    }),
+    postcssReporter({
+      clearMessages: true
+    })
+  ]
 }

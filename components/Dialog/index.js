@@ -1,4 +1,4 @@
 import Dialog from './Dialog';
-import './dialog.scss';
+import './dialog.css';
 
 export default Dialog;

@@ -8,7 +8,7 @@ export default class App extends Component {
       show: true,
       type: 'alert',
       message: '这个是定时弹窗消息！',
-      timeout: false
+      timeout: 2000
     };
     this.refs.dialog.setState(dialog);
   }

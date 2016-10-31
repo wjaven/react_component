@@ -18,7 +18,8 @@ export default class Dialog extends Component {
   }
 
   submit(){
-    let result, dialog=this.state;
+    const dialog = this.state;
+    let result;
     if(dialog.type === 'confirm') {
       result = true;
     } else {

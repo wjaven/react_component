@@ -41,7 +41,7 @@ module.exports = {
     }),
     cssnext({
       autoprefixer: {
-        browers: 'ie >= 10, ...'
+        browers: 'ie >= 9, ...'
       }
     }),
     stylelint({

@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import Dialog from '../components/Dialog';
 
 export default class App extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.alert = this.alert.bind(this);
+    this.confirm = this.confirm.bind(this);
+    this.prompt = this.prompt.bind(this);
+  }
 
   alert() {
     let dialog = {
@@ -10,7 +16,7 @@ export default class App extends Component {
       message: '这个是定时弹窗消息！',
       timeout: 2000
     };
-    this.refs.dialog.setState(dialog);
+    this.dialog.setState(dialog);
   }
 
   confirm() {
@@ -22,7 +28,7 @@ export default class App extends Component {
         console.log(result);
       }
     };
-    this.refs.dialog.setState(dialog);
+    this.dialog.setState(dialog);
   }
 
   prompt() {
@@ -38,18 +44,18 @@ export default class App extends Component {
         console.log(result);
       }
     };
-    this.refs.dialog.setState(dialog);
+    this.dialog.setState(dialog);
   }
 
   render() {
     return (
       <div>
         <div>
-          <button onClick={this.alert.bind(this)}>alert</button>
-          <button onClick={this.confirm.bind(this)}>confirm</button>
-          <button onClick={this.prompt.bind(this)}>prompt</button>
+          <button onClick={this.alert}>alert</button>
+          <button onClick={this.confirm}>confirm</button>
+          <button onClick={this.prompt}>prompt</button>
         </div>
-        <Dialog ref="dialog" />
+        <Dialog ref={(dialog) => { this.dialog = dialog; }} />
       </div>
     );
   }

@@ -23,6 +23,11 @@ const postcssImport = require('postcss-import');
 const cssnext = require('postcss-cssnext');
 const stylelint = require('stylelint');
 const postcssReporter = require('postcss-reporter');
+//在css的css-loader之前先通过postcss-loader加载
+{
+  test: /\.css$/,
+  loader: 'style-loader!css-loader!postcss-loader'
+}
 // ...
 postcss: [
   postcssImport({
@@ -41,3 +46,31 @@ postcss: [
     clearMessages: true
   })
 ]
+
+//配置stylelint.config.js
+module.exports = {
+  extends: "stylelint-config-standard",
+  rules: {
+    "block-no-empty": true,
+    "color-hex-case": null,
+    "color-hex-length": null,
+    "color-no-invalid-hex": true,
+    "length-zero-no-unit": true,
+    "root-no-standard-properties": true,
+    "comment-empty-line-before": ["always", {
+      "except": ["first-nested"],
+      "ignore": ["stylelint-commands", "between-comments"],
+    }],
+    "declaration-colon-space-after": "always",
+    "max-empty-lines": 2,
+    "rule-nested-empty-line-before": ["always", {
+      "except": ["first-nested"],
+      "ignore": ["after-comment"],
+    }],
+    "unit-whitelist": ["em", "rem", "%", "s", "ms", "px", "deg", "vw", "vh", "dpi", "dppx"],
+    "selector-combinator-space-after": null
+  }
+};
+
+//配置.stylelintignore
+node_modules/

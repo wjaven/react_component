@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import cs from 'classnames';
+import classnames from 'classnames';
 
 export default class Dialog extends Component {
   constructor(props, context) {
@@ -16,16 +16,34 @@ export default class Dialog extends Component {
       callback: null
     };
     this.timer = null;
+    this.submit = this.submit.bind(this);
+    this.enter = this.enter.bind(this);
+    this.close = this.close.bind(this);
   }
 
-  submit(){
+  componentDidUpdate() {
+    if (this.state.show) {
+      this.inpt.value = this.state.defaultValue;
+      this.timer = setTimeout(() => {
+        this.wrap.className = "dialog_wrap dialog_show active";
+      });
+      if (this.state.type === 'alert' && this.state.timeout) {
+        this.timer = setTimeout(() => {
+          if (this.wrap.className.indexOf('active') < 0) { return; }
+          this.close();
+        }, this.state.timeout);
+      }
+    }
+  }
+
+  submit() {
     const dialog = this.state;
     let result;
-    if(dialog.type === 'confirm') {
+    if (dialog.type === 'confirm') {
       result = true;
     } else {
-      result = this.refs.inpt.value.trim();
-      if(result.length < dialog.min || result.length > dialog.max){
+      result = this.inpt.value.trim();
+      if (result.length < dialog.min || result.length > dialog.max) {
         return;
       }
     }
@@ -34,63 +52,48 @@ export default class Dialog extends Component {
   }
 
   enter(event) {
-    if(event.which === 13){
+    if (event.which === 13) {
       this.submit();
     }
   }
 
   close() {
-    this.refs.wrap.className = "dialog_wrap dialog_show";
+    this.wrap.className = "dialog_wrap dialog_show";
     clearTimeout(this.timer);
-    this.timer = setTimeout(function() {console.log('dd')
+    this.timer = setTimeout(() => {
       this.setState({
         show: false
       });
-    }.bind(this), 150);
-  }
-
-  componentDidUpdate() {
-    if(this.state.show) {
-      this.refs.inpt.value = this.state.defaultValue;
-      this.timer = setTimeout(function() {
-        this.refs.wrap.className = "dialog_wrap dialog_show active";
-      }.bind(this));
-      if(this.state.type === 'alert' && this.state.timeout) {
-        this.timer = setTimeout(function() {
-          if(this.refs.wrap.className.indexOf('active')<0) {return;}
-          this.close();
-        }.bind(this), this.state.timeout);
-      }
-    }
+    }, 150);
   }
 
   render() {
     const dialog = this.state;
-    const dialogClass = cs({
+    const dialogClass = classnames({
       dialog_wrap: true,
       dialog_show: dialog.show
     });
-    const alertClass = cs({
+    const alertClass = classnames({
       dialog_alert: true,
       dialog_message: true,
       dialog_show: dialog.type === 'alert'
     });
-    const confirmClass = cs({
+    const confirmClass = classnames({
       dialog_confirm: true,
       dialog_show: dialog.type === 'confirm'
     });
-    const promptClass = cs({
+    const promptClass = classnames({
       dialog_prompt: true,
       dialog_show: dialog.type === 'prompt'
     });
-    const bottonClass = cs({
+    const bottonClass = classnames({
       dialog_btn: true,
       dialog_show: dialog.type === 'confirm' || dialog.type === 'prompt'
     });
     return (
-      <div ref="wrap" className={dialogClass}>
-        <div className="dialog_mask" onClick={this.close.bind(this)}></div>
-        <div ref="stop" className="dialog_box">
+      <div ref={(wrap) => { this.wrap = wrap; }} className={dialogClass}>
+        <div className="dialog_mask" onClick={this.close} />
+        <div className="dialog_box">
           <div className={alertClass}>{dialog.message}</div>
           <div className={confirmClass}>
             <div className="dialog_message">{dialog.message}</div>
@@ -99,16 +102,17 @@ export default class Dialog extends Component {
             <div className="dialog_message">{dialog.message}</div>
             <div className="dialog_prompt_inpt">
               <input
-                ref="inpt"
+                ref={(inpt) => { this.inpt = inpt; }}
                 type="text"
                 placeholder={dialog.placeholder}
-                onKeyUp={this.enter.bind(this)}/>
+                onKeyUp={this.enter}
+              />
             </div>
           </div>
           <div className={bottonClass}>
-              <button onClick={this.close.bind(this)}>取消</button>
-              <button onClick={this.submit.bind(this)}>确定</button>
-            </div>
+            <button onClick={this.close}>取消</button>
+            <button onClick={this.submit}>确定</button>
+          </div>
         </div>
       </div>
     );
@@ -124,4 +128,4 @@ Dialog.PropTypes = {
   placeholder: PropTypes.string,
   initValue: PropTypes.string,
   callback: PropTypes.func
-}
+};

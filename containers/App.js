@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Dialog from '../components/Dialog';
+import FormInpt from '../components/Form/FormInpt'
 
 export default class App extends Component {
   constructor(props, context) {
@@ -48,6 +49,7 @@ export default class App extends Component {
   }
 
   render() {
+    const inptVerify = {type: 'text', min: 1,max: 4, inptError: '错误信息！'};
     return (
       <div>
         <div>
@@ -56,6 +58,16 @@ export default class App extends Component {
           <button onClick={this.prompt}>prompt</button>
         </div>
         <Dialog ref={(dialog) => { this.dialog = dialog; }} />
+        <div>
+          <FormInpt
+            inptWidth="w200"
+            inptHeight="h50"
+            name="name"
+            placeholder="placeholder"
+            defaultValue="初始值"
+            verify={inptVerify}
+          />
+        </div>
       </div>
     );
   }

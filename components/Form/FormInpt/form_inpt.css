@@ -1,0 +1,32 @@
+.form_inpt_wrap {
+  width: 140px;
+}
+
+.form_inpt {
+  padding: 0 10px;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  border: #ddd 1px solid;
+  color: #333;
+  font-size: 12px;
+  outline: none;
+}
+
+.form_inpt:focus {
+  border-color: #3bb4f2;
+  box-shadow: 0 0 4px rgba(59, 180, 242, 0.3);
+}
+
+.form_inpt_error {
+  height: 0;
+  line-height: 20px;
+  color: #ff0000;
+  font-size: 12px;
+  overflow: hidden;
+  transition: height 0.05s linear;
+}
+
+.form_inpt_error.active{
+  height:20px;
+}

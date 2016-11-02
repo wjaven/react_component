@@ -69,25 +69,19 @@ export default class Dialog extends Component {
 
   render() {
     const dialog = this.state;
-    const dialogClass = classnames({
-      dialog_wrap: true,
+    const dialogClass = classnames('dialog_wrap', {
       dialog_show: dialog.show
     });
-    const alertClass = classnames({
-      dialog_alert: true,
-      dialog_message: true,
+    const alertClass = classnames('dialog_alert dialog_message',{
       dialog_show: dialog.type === 'alert'
     });
-    const confirmClass = classnames({
-      dialog_confirm: true,
+    const confirmClass = classnames('dialog_confirm', {
       dialog_show: dialog.type === 'confirm'
     });
-    const promptClass = classnames({
-      dialog_prompt: true,
+    const promptClass = classnames('dialog_prompt', {
       dialog_show: dialog.type === 'prompt'
     });
-    const bottonClass = classnames({
-      dialog_btn: true,
+    const bottonClass = classnames('dialog_btn', {
       dialog_show: dialog.type === 'confirm' || dialog.type === 'prompt'
     });
     return (

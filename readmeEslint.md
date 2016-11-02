@@ -1,26 +1,24 @@
 eslint
 
-#基础
+###基础
 eslint
-#babel-eslint来检测ES6代码
+###babel-eslint来检测ES6代码
 babel-eslint
-#检测React的代码规则
+###检测React的代码规则
 eslint-plugin-react
-#检测async/await functions，spread operator 等
+###检测async/await functions，spread operator 等
 eslint-plugin-babel
-#扩展规则：
-#我们不想每次都在.eslintrc中指定规则，已经有很多符合最佳实践的规则。
-#其中之一就是Airbnb Style Guide，还需要install
+###扩展规则：我们不想每次都在.eslintrc中指定规则，已经有很多符合最佳实践的规则。其中之一就是Airbnb Style Guide，还需要install
 eslint-config-airbnb
 eslint-plugin-import
 eslint-plugin-jsx-a11y
-#另一个别人写好的配置,.eslintrc的extends改成“standard”，需要install
+###另一个别人写好的配置,.eslintrc的extends改成“standard”，需要install
 //eslint-config-standard
 //eslint-plugin-standard
 //eslint-plugin-promise//promise规则
-#告诉webpack我们在构建时使用eslint
+###告诉webpack我们在构建时使用eslint
 //eslint-loader
-#
+###
 //eslint-import-resolver-webpack
 
 //package.json中配置scripts,方便提交前检测"eslint位置 检测文件 --ext 文件后缀名"
@@ -29,7 +27,7 @@ eslint-plugin-jsx-a11y
 //rules:
 0代码错误不提示、1代表警告提醒但不影响现有编译、2error会抛出错误。
 
-#配置
+###配置
     //配置.eslintrc检测规则
     {
       "extends": "airbnb",

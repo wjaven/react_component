@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Dialog from '../components/Dialog';
-import FormInpt from '../components/Form/FormInpt'
+import FormInpt from '../components/Form/FormInpt';
 
 export default class App extends Component {
   constructor(props, context) {
@@ -11,7 +11,7 @@ export default class App extends Component {
   }
 
   alert() {
-    let dialog = {
+    const dialog = {
       show: true,
       type: 'alert',
       message: '这个是定时弹窗消息！',
@@ -21,11 +21,11 @@ export default class App extends Component {
   }
 
   confirm() {
-    let dialog = {
+    const dialog = {
       show: true,
       type: 'confirm',
       message: '确定吗？',
-      callback: function(result) {
+      callback: (result) => {
         console.log(result);
       }
     };
@@ -33,7 +33,7 @@ export default class App extends Component {
   }
 
   prompt() {
-    let dialog = {
+    const dialog = {
       show: true,
       type: 'prompt',
       message: '请输入内容(1-4位)',
@@ -41,7 +41,7 @@ export default class App extends Component {
       max: 4,
       placeholder: '请输入内容(1-4位)',
       defaultValue: '初始值',
-      callback: function(result) {
+      callback: (result) => {
         console.log(result);
       }
     };
@@ -49,7 +49,7 @@ export default class App extends Component {
   }
 
   render() {
-    const inptVerify = {type: 'text', min: 1,max: 4, inptError: '错误信息！'};
+    const inptVerify = {type: 'text', min: 1, max: 4, inptError: '错误信息！'};
     return (
       <div>
         <div>
@@ -57,7 +57,7 @@ export default class App extends Component {
           <button onClick={this.confirm}>confirm</button>
           <button onClick={this.prompt}>prompt</button>
         </div>
-        <Dialog ref={(dialog) => { this.dialog = dialog; }} />
+        <Dialog ref={(ref) => { this.dialog = ref; }} />
         <div>
           <FormInpt
             inptWidth="w200"

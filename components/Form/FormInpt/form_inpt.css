@@ -27,6 +27,6 @@
   transition: height 0.05s linear;
 }
 
-.form_inpt_error.active{
-  height:20px;
+.form_inpt_error.active {
+  height: 20px;
 }

@@ -14,22 +14,25 @@ export default class FormInpt extends Component {
 
   componentDidMount() {
     const {defaultValue} = this.props;
-    this.inpt.value = defaultValue ? defaultValue : '';
+    this.inpt.value = defaultValue || '';
   }
 
   onBlur() {
     const {verify} = this.props;
     if (!verify) { return; }
     const result = this.inpt.value.trim();
-    switch (verify.type){
+    switch (verify.type) {
       case 'text':
         this.verifyText(result, verify.min, verify.max);
+        break;
+      default:
+        break;
     }
   }
 
   verifyText(result, min, max) {
     const len = result.length;
-    if (len < min || max&&len > max) {
+    if (len < min || (max && len > max)) {
       this.setState({inptErrorShow: true});
     } else {
       this.setState({inptErrorShow: false});
@@ -39,12 +42,12 @@ export default class FormInpt extends Component {
   render() {
     const oldState = this.state;
     const {inptWidth, inptHeight, name, placeholder, defaultValue, verify} = this.props;
-    const inptClass = classnames('form_inpt',{
-      'form_inpt_${inptWidth}': inptWidth,
-      'form_inpt_${inptHeight}': inptHeight,
+    const inptClass = classnames('form_inpt', {
+      inptWidth,
+      inptHeight,
     });
-    const error = verify&&verify.inptError ? verify.inptError : '';
-    const errorClass = classnames('form_inpt_error',{
+    const error = verify && verify.inptError ? verify.inptError : '';
+    const errorClass = classnames('form_inpt_error', {
       active: oldState.inptErrorShow
     });
     return (

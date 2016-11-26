@@ -23,7 +23,9 @@ export default class Dialog extends Component {
 
   componentDidUpdate() {
     if (this.state.show) {
-      this.inpt.value = this.state.defaultValue;
+      if (this.inpt) {
+        this.inpt.value = this.state.defaultValue;
+      }
       this.timer = setTimeout(() => {
         this.wrap.className = "dialog_wrap dialog_show active";
       });
@@ -47,7 +49,7 @@ export default class Dialog extends Component {
         return;
       }
     }
-    dialog.callback.call(null, result);
+    dialog.callback(result);
     this.close();
   }
 
@@ -72,41 +74,41 @@ export default class Dialog extends Component {
     const dialogClass = classnames('dialog_wrap', {
       dialog_show: dialog.show
     });
-    const alertClass = classnames('dialog_alert dialog_message',{
-      dialog_show: dialog.type === 'alert'
-    });
-    const confirmClass = classnames('dialog_confirm', {
-      dialog_show: dialog.type === 'confirm'
-    });
-    const promptClass = classnames('dialog_prompt', {
-      dialog_show: dialog.type === 'prompt'
-    });
-    const bottonClass = classnames('dialog_btn', {
-      dialog_show: dialog.type === 'confirm' || dialog.type === 'prompt'
-    });
     return (
       <div ref={(wrap) => { this.wrap = wrap; }} className={dialogClass}>
         <div className="dialog_mask" onClick={this.close} />
         <div className="dialog_box">
-          <div className={alertClass}>{dialog.message}</div>
-          <div className={confirmClass}>
-            <div className="dialog_message">{dialog.message}</div>
-          </div>
-          <div className={promptClass}>
-            <div className="dialog_message">{dialog.message}</div>
-            <div className="dialog_prompt_inpt">
-              <input
-                ref={(inpt) => { this.inpt = inpt; }}
-                type="text"
-                placeholder={dialog.placeholder}
-                onKeyUp={this.enter}
-              />
-            </div>
-          </div>
-          <div className={bottonClass}>
-            <button onClick={this.close}>取消</button>
-            <button onClick={this.submit}>确定</button>
-          </div>
+          {
+            dialog.type === 'alert' &&
+              <div className="dialog_alert dialog_message">{dialog.message}</div>
+          }
+          {
+            dialog.type === 'confirm' &&
+              <div className="dialog_confirm">
+                <div className="dialog_message">{dialog.message}</div>
+              </div>
+          }
+          {
+            dialog.type === 'prompt' &&
+              <div className="dialog_prompt">
+                <div className="dialog_message">{dialog.message}</div>
+                <div className="dialog_prompt_inpt">
+                  <input
+                    ref={(ref) => { this.inpt = ref; }}
+                    type="text"
+                    placeholder={dialog.placeholder}
+                    onKeyUp={this.enter}
+                  />
+                </div>
+              </div>
+          }
+          {
+            (dialog.type === 'confirm' || dialog.type === 'prompt') &&
+              <div className="dialog_btn">
+                <button onClick={this.close}>取消</button>
+                <button onClick={this.submit}>确定</button>
+              </div>
+          }
         </div>
       </div>
     );

@@ -27,6 +27,10 @@
   transition: height 0.05s linear;
 }
 
-.form_inpt_error.active {
+.form_inpt_wrap.active > input {
+  border-color: #ff0000;
+}
+
+.form_inpt_wrap.active .form_inpt_error {
   height: 20px;
 }

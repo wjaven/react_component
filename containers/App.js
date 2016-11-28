@@ -8,6 +8,11 @@ export default class App extends Component {
     this.alert = this.alert.bind(this);
     this.confirm = this.confirm.bind(this);
     this.prompt = this.prompt.bind(this);
+    this.changeInpt = this.changeInpt.bind(this);
+  }
+
+  changeInpt(value) {
+    console.log(value);
   }
 
   alert() {
@@ -49,7 +54,7 @@ export default class App extends Component {
   }
 
   render() {
-    const inptVerify = {type: 'text', min: 1, max: 4, inptError: '错误信息！'};
+    const inptVerify = {type: 'text', min: 1, max: 4, error: '错误信息！'};
     return (
       <div>
         <div>
@@ -60,12 +65,11 @@ export default class App extends Component {
         <Dialog ref={(ref) => { this.dialog = ref; }} />
         <div>
           <FormInpt
-            inptWidth="w200"
-            inptHeight="h50"
             name="name"
-            placeholder="placeholder"
-            defaultValue="初始值"
             verify={inptVerify}
+            onChange={this.changeInpt}
+            defaultValue="初始值"
+            placeholder="placeholder"
           />
         </div>
       </div>

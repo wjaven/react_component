@@ -6,8 +6,10 @@ export default class FormInpt extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      inptErrorShow: false
+      errorShow: false
     };
+    this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.verifyText = this.verifyText.bind(this);
   }
@@ -17,50 +19,61 @@ export default class FormInpt extends Component {
     this.inpt.value = defaultValue || '';
   }
 
+  onChange(e) {
+    const {onChange} = this.props;
+    onChange(e.target.value);
+  }
+
+  onFocus() {
+    this.setState({errorShow: false});
+  }
+
   onBlur() {
     const {verify} = this.props;
     if (!verify) { return; }
     const result = this.inpt.value.trim();
     switch (verify.type) {
       case 'text':
-        this.verifyText(result, verify.min, verify.max);
+        this.verifyText(result, {
+          min: verify.min,
+          max: verify.max
+        });
         break;
       default:
         break;
     }
   }
 
-  verifyText(result, min, max) {
+  verifyText(result, obj) {
     const len = result.length;
-    if (len < min || (max && len > max)) {
-      this.setState({inptErrorShow: true});
+    if ((obj.min && len < obj.min) || (obj.max && len > obj.max)) {
+      this.setState({errorShow: true});
     } else {
-      this.setState({inptErrorShow: false});
+      this.setState({errorShow: false});
     }
   }
 
   render() {
     const oldState = this.state;
-    const {inptWidth, inptHeight, name, placeholder, defaultValue, verify} = this.props;
-    const inptClass = classnames('form_inpt', {
-      inptWidth,
-      inptHeight,
-    });
-    const error = verify && verify.inptError ? verify.inptError : '';
-    const errorClass = classnames('form_inpt_error', {
-      active: oldState.inptErrorShow
+    const {name, verify, defaultValue, placeholder} = this.props;
+    const error = verify && verify.error ? verify.error : '';
+    const wrapClass = classnames('form_inpt_wrap', {
+      active: oldState.errorShow
     });
     return (
-      <div className="form_inpt_wrap">
+      <div className={wrapClass}>
         <input
           ref={(inpt) => { this.inpt = inpt; }}
-          className={inptClass}
+          type="text"
+          className="form_inpt"
           name={name}
-          type='text'
-          placeholder={placeholder}
+          onChange={this.onChange}
+          onFocus={this.onFocus}
           onBlur={this.onBlur}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
         />
-        <div className={errorClass}>{error}</div>
+        <div className="form_inpt_error">{error}</div>
       </div>
     );
   }
@@ -73,12 +86,12 @@ FormInpt.PropTypes = {
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
   verify: PropTypes.object
-}
+};
 /*
 verify: {//不传时不校验
   type: 'text',//类型[text,number],（不传时，switch=default）
   min: 1,//最小长度,type=number是为最小最大值,（必传）
   max: 20,//最大长度
-  inptError: '错误信息！'//错误提示信息
+  error: '错误信息！'//错误提示信息
 }
 */

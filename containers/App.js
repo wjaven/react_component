@@ -65,9 +65,11 @@ export default class App extends Component {
         <Dialog ref={(ref) => { this.dialog = ref; }} />
         <div>
           <FormInpt
+            width="200px"
             name="name"
             verify={inptVerify}
             onChange={this.changeInpt}
+            unit="个"
             defaultValue="初始值"
             placeholder="placeholder"
           />

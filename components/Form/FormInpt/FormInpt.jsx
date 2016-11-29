@@ -55,17 +55,21 @@ export default class FormInpt extends Component {
 
   render() {
     const oldState = this.state;
-    const {name, verify, defaultValue, placeholder} = this.props;
+    const {width, name, verify, unit, defaultValue, placeholder} = this.props;
     const error = verify && verify.error ? verify.error : '';
-    const wrapClass = classnames('form_inpt_wrap', {
-      active: oldState.errorShow
+    const wrapClass = classnames('form_inpt', {
+      error: oldState.errorShow,
+      unit
     });
     return (
-      <div className={wrapClass}>
+      <div
+        style={{width}}
+        className={wrapClass}
+      >
         <input
           ref={(inpt) => { this.inpt = inpt; }}
           type="text"
-          className="form_inpt"
+          className="form_inpt__inpt"
           name={name}
           onChange={this.onChange}
           onFocus={this.onFocus}
@@ -73,7 +77,8 @@ export default class FormInpt extends Component {
           defaultValue={defaultValue}
           placeholder={placeholder}
         />
-        <div className="form_inpt_error">{error}</div>
+        <span className="form_inpt__unit">{unit}</span>
+        <div className="form_inpt__error">{error}</div>
       </div>
     );
   }

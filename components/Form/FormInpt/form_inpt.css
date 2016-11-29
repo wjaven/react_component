@@ -1,8 +1,9 @@
-.form_inpt_wrap {
+.form_inpt {
+  position: relative;
   width: 140px;
 }
 
-.form_inpt {
+.form_inpt__inpt {
   padding: 0 10px;
   width: 100%;
   height: 32px;
@@ -13,12 +14,28 @@
   outline: none;
 }
 
-.form_inpt:focus {
+.form_inpt__unit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  border-left: #ddd 1px solid;
+  font-size: 14px;
+}
+
+.form_inpt.unit .form_inpt__inpt {
+  padding-right: 42px;
+}
+
+.form_inpt_inpt:focus {
   border-color: #3bb4f2;
   box-shadow: 0 0 4px rgba(59, 180, 242, 0.3);
 }
 
-.form_inpt_error {
+.form_inpt__error {
   height: 0;
   line-height: 20px;
   color: #ff0000;
@@ -27,10 +44,11 @@
   transition: height 0.05s linear;
 }
 
-.form_inpt_wrap.active > input {
+.form_inpt.error .form_inpt__inpt,
+.form_inpt.error .form_inpt__unit {
   border-color: #ff0000;
 }
 
-.form_inpt_wrap.active .form_inpt_error {
+.form_inpt.error .form_inpt__error {
   height: 20px;
 }

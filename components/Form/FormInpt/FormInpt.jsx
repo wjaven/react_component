@@ -55,7 +55,7 @@ export default class FormInpt extends Component {
 
   render() {
     const oldState = this.state;
-    const {width, name, verify, unit, defaultValue, placeholder} = this.props;
+    const {width, name, id, verify, unit, defaultValue, placeholder} = this.props;
     const error = verify && verify.error ? verify.error : '';
     const wrapClass = classnames('form_inpt', {
       error: oldState.errorShow,
@@ -71,6 +71,7 @@ export default class FormInpt extends Component {
           type="text"
           className="form_inpt__inpt"
           name={name}
+          id={id}
           onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

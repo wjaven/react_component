@@ -4,48 +4,73 @@ export default class FormSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      selectedOpt: {
+        value: '',
+        text: ''
+      }
     };
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-  /*  const defaultOpt = this.props.options[0];
-    this.setState({
-      value: defaultOpt.text || defaultOpt.label || defaultOpt.name
-    });*/
+    this.resetDefaultValue(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.resetDefaultValue(nextProps);
   }
 
   onChange(option) {
-    return (e) => {
+    return () => {
       const {onChange} = this.props;
-      this.setState({
-        value: option.text || option.label || option.name
-      });
-      onChange({
-        option,
-        checked: e.target.checked
-      });
+      this.setSelectedOpt(option);
+      onChange(option);
     };
   }
 
-  componentUpdate() {
-    console.log(this.props);
+  setSelectedOpt(option) {
+    this.setState({
+      selectedOpt: {
+        value: option.id || option.value,
+        text: option.text || option.label || option.name
+      }
+    });
+  }
+
+  resetDefaultValue(props) {
+    const {defaultValue, options} = props;
+    let defaultOpt = options[0];
+    if (defaultValue) {
+      for (let i = 0; i < options.length; i += 1) {
+        if (defaultValue === options[i].id || defaultValue === options[i].value) {
+          defaultOpt = options[i];
+          break;
+        }
+      }
+    }
+    this.setSelectedOpt(defaultOpt);
   }
 
   render() {
-    const {id, width, options} = this.props;
-    const value = this.state.value;
-    const widthStyle = {width};
+    const {name, id, width, options} = this.props;
+    const selectedOpt = this.state.selectedOpt;
     return (
-      <div className="form_select form_select_over" style={widthStyle}>
-        <div>{value}</div>
+      <div className="form_select form_select_over" style={{width}}>
+        <div>{selectedOpt.text}</div>
         <i className="tshe-icon icon-tshe-expand-more selector_icon" />
-        <input id={id} type="text" readOnly="true" value={value} />
+        <input
+          type="text"
+          name={name}
+          id={id}
+          value={selectedOpt.value}
+          readOnly="true"
+        />
         <ul>
           {options.map((option, index) => {
+            const optClass = selectedOpt.value === option.id || selectedOpt.value === option.value ? 'active' : '';
             return (
               <li
+                className={optClass}
                 key={index}
                 onMouseDown={this.onChange(option)}
               >

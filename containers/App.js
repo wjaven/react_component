@@ -4,13 +4,14 @@ import FormInpt from '../components/Form/FormInpt';
 import FormSelect from '../components/Form/FormSelect';
 import FormRadio from '../components/Form/FormRadio';
 import FormCheckbox from '../components/Form/FormCheckbox';
+import FormToggle from '../components/Form/FormToggle';
 
 export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       defaultInpt: '初始值值',
-      options: [{id: '1', label: 'aa'}, {id: '2', label: 'bb'}, {id: '3', label: 'cc'}],
+      options: [{id: '1', label: 'aaaaaaaaaaaa'}, {id: '2', label: 'bb'}, {id: '3', label: 'cc'}],
       defaultOpt: '2',
       selArrays: [
         {value: '2'},
@@ -18,7 +19,8 @@ export default class App extends Component {
       ],
       defaultRadio: true,
       checkboxs: [{id: '1', label: 'aa'}, {id: '2', label: 'bb'}],
-      defaultCheckbox: []
+      defaultCheckbox: [],
+      defaultToggle: false
     };
     this.alert = this.alert.bind(this);
     this.confirm = this.confirm.bind(this);
@@ -27,6 +29,7 @@ export default class App extends Component {
     this.changeSelect = this.changeSelect.bind(this);
     this.changeRadio = this.changeRadio.bind(this);
     this.changeCheckbox = this.changeCheckbox.bind(this);
+    this.changeToggle = this.changeToggle.bind(this);
   }
 
   changeInpt(value) {
@@ -54,6 +57,11 @@ export default class App extends Component {
       newArr = defaultCheckbox.filter(val => val.id !== obj.item.id);
     }
     this.setState({defaultCheckbox: newArr});
+    console.log(obj);
+  }
+
+  changeToggle(obj) {
+    this.setState({defaultToggle: obj.checked});
     console.log(obj);
   }
 
@@ -106,7 +114,8 @@ export default class App extends Component {
       selArrays,
       defaultRadio,
       checkboxs,
-      defaultCheckbox
+      defaultCheckbox,
+      defaultToggle
     } = this.state;
     const inptVerify = {type: 'text', min: 1, max: 4, error: '错误信息！'};
     return (
@@ -186,6 +195,15 @@ export default class App extends Component {
               );
             })
           }
+        </div>
+        <div>
+          <FormToggle
+            name="toggle"
+            id="toggle"
+            item={{id: '1', value: 'toggle1'}}
+            isChecked={defaultToggle}
+            onChange={this.changeToggle}
+          />
         </div>
       </div>
     );

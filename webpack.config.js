@@ -1,12 +1,19 @@
 const webpack = require('webpack');
+const PATH = require('./build_path');
 const postcssImport = require('postcss-import');
 const cssnext = require('postcss-cssnext');
 const stylelint = require('stylelint');
 const postcssReporter = require('postcss-reporter');
+
 module.exports = {
-  entry: './index.js',
+  context: PATH.ROOT_PATH,
+  entry: {
+    index: './index.js'
+  },
   output: {
-    filename:'bundle.js'
+    path: PATH.ASSET_PATH,
+    filename: '[name]_bundle.js',
+    publicPath: '/assets/'
   },
   module: {
     loaders: [

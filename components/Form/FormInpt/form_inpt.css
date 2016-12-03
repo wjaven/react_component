@@ -4,13 +4,13 @@
 }
 
 .form_inpt__inpt {
-  padding: 0 10px;
+  padding: 0 8px;
   width: 100%;
-  height: 32px;
-  line-height: 32px;
-  border: #ddd 1px solid;
-  color: #333;
-  font-size: 12px;
+  height: 36px;
+  line-height: 36px;
+  border: #c6c6c6 1px solid;
+  color: #4a4a4a;
+  font-size: 14px;
   outline: none;
 }
 
@@ -18,27 +18,28 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
   text-align: center;
-  border-left: #ddd 1px solid;
+  border-left: #c6c6c6 1px solid;
+  color: #9b9b9b;
   font-size: 14px;
 }
 
 .form_inpt.unit .form_inpt__inpt {
-  padding-right: 42px;
+  padding-right: 44px;
 }
 
 .form_inpt_inpt:focus {
-  border-color: #3bb4f2;
+  border-color: #ff5a5e;
   box-shadow: 0 0 4px rgba(59, 180, 242, 0.3);
 }
 
 .form_inpt__error {
   height: 0;
   line-height: 20px;
-  color: #ff0000;
+  color: #ff5a5e;
   font-size: 12px;
   overflow: hidden;
   transition: height 0.05s linear;
@@ -46,7 +47,7 @@
 
 .form_inpt.error .form_inpt__inpt,
 .form_inpt.error .form_inpt__unit {
-  border-color: #ff0000;
+  border-color: #ff5a5e;
 }
 
 .form_inpt.error .form_inpt__error {

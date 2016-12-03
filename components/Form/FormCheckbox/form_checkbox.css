@@ -1,0 +1,42 @@
+.form_checkbox {
+  display: inline-block;
+  position: relative;
+  margin-right: 8px;
+  padding-left:20px;
+}
+
+.form_checkbox > input,
+.form_checkbox > label:after {
+  position: absolute;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.form_checkbox > input {
+  top: 0;
+  opacity: 0;
+  z-index: 5;
+}
+
+.form_checkbox > label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form_checkbox > label:after {
+  top: 50%;
+  content:"\2714";
+  line-height: 14px;
+  text-align: center;
+  border: #4a4a4a 1px solid;
+  color: #fff;
+  font-size: 12px;
+  z-index: 4;
+  transform: translateY(-50%);
+}
+
+.form_checkbox > input:checked + label:after {
+  background-color: #4a4a4a;
+}

@@ -1,4 +1,4 @@
-eslint
+eslint xbsf
 
 ###基础
 eslint

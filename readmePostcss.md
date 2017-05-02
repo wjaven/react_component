@@ -1,7 +1,6 @@
 postcss
 
 ###基础加载器
-
 postcss-loader
 ###cssnext可以让你写CSS4的语言，并能配合autoprefixer进行浏览器兼容的不全，而且还支持嵌套语法
 $ npm install postcss-cssnext --save-dev
@@ -19,7 +18,6 @@ $ npm install stylelint-config-standard --save-dev
 $ npm install postcss-reporter --save-dev
 
 ###配置
-
     // 配置webpack.config.js
     const postcssImport = require('postcss-import');
     const cssnext = require('postcss-cssnext');
